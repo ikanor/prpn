@@ -30,3 +30,25 @@ def eval(expression):
             "Invalid RPN expression: not enough operators %s" % stack)
 
     return stack.pop()
+
+
+def parse(expression):
+    stack = []
+
+    for token in string.split(expression):
+        if token in operators:
+            if len(stack) < 2:
+                raise ValueError(
+                    "Invalid RPN expression: not enough operands "
+                    "for operator %s" % token)
+            right, left = stack.pop(), stack.pop()
+            result = {token: (left, right)}
+        else:
+            result = token
+        stack.append(result)
+
+    if len(stack) > 1:
+        raise ValueError(
+            "Invalid RPN expression: not enough operators %s" % stack)
+
+    return stack.pop()
