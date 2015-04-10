@@ -1,6 +1,6 @@
 import unittest
 
-import rpn
+import rpn.parsers
 
 
 class TestCase(unittest.TestCase):

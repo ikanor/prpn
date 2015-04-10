@@ -1,1 +1,2 @@
-from main import *
+import parser
+import parsers
