@@ -21,3 +21,8 @@ parse = parser.generate(
     operators,
     lambda operator, *args: {operator: args},
     lambda operand: operand)
+
+export = parser.generate(
+    operators,
+    lambda operator, *args: "(%s %s %s)" % (args[0], operator, args[1]),
+    lambda operand: operand)
