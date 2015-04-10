@@ -68,3 +68,51 @@ def generate(operators, solve, convert):
     def parser(expression):
         return traverse(expression, operators, solve, convert)
     return parser
+
+
+class Parser(object):
+    """
+    Parser object interface.
+    """
+    def __init__(self, operators):
+        self.operators = operators
+
+    def eval(self, expression):
+        """
+        Computes the final value of the RPN expression.
+
+        Throws:
+            NotImplementedError in any case. This method cannot have a default
+            implementation, for it and must be written specifically for each
+            set of operators and domain.
+        """
+        raise NotImplementedError()
+
+    def parse(self, expression):
+        """
+        Computes the parsed tree of the RPN expression.
+
+        Returns:
+            A dictionary where the keys are tokens representing the operators,
+            and each children is a tuple with the operands, which can be
+            a string representing an operand or another dictionary with a
+            recursive operation.
+        """
+        return traverse(
+            expression,
+            self.operators,
+            lambda operator, *args: {operator: args},
+            lambda operand: operand)
+
+    def export(self, expression):
+        """
+        Computes the standard representation of the RPN expression.
+
+        Returns:
+            A string with parenthesis representing the operation tree.
+        """
+        return traverse(
+            expression,
+            self.operators,
+            lambda operator, *args: "(%s %s %s)" % (args[0], operator, args[1]),
+            lambda operand: operand)
