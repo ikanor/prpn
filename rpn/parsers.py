@@ -16,3 +16,8 @@ math.eval = lambda expression: parser.traverse(
     math.operators,
     lambda operator, *args: math.operators[operator](*args),
     float)
+
+boolean = parser.Parser([
+    'and',
+    'or',
+])
